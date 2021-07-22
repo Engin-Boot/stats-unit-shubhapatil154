@@ -1,5 +1,6 @@
 using System;
 using Xunit;
+using System.Collections.Generic;
 using Statistics;
 
 namespace Statistics.Test
@@ -9,37 +10,60 @@ namespace Statistics.Test
         [Fact]
         public void ReportsAverageMinMax()
         {
-            var statsComputer = new StatsComputer();
-            var computedStats = statsComputer.CalculateStatistics(
-                new List<___>{1.5, 8.9, 3.2, 4.5});
+            #region Arrange
+            var statsComputer  = new StatsComputer();
+            var computedStats  = new List<float>{1.5f, 8.9f, 3.2f, 4.5f};
             float epsilon = 0.001F;
-            Assert.True(Math.Abs(statsComputer.average - 4.525) <= epsilon);
-            Assert.True(Math.Abs(statsComputer.max - 8.9) <= epsilon);
-            Assert.True(Math.Abs(statsComputer.min - 1.5) <= epsilon);
+            #endregion
+
+            #region Act
+            statsComputer.CalculateStatistics(computedStats);            
+            #endregion
+
+            #region Assert
+            Assert.True(Math.Abs(statsComputer.averageValue - 4.525) <= epsilon);
+            Assert.True(Math.Abs(statsComputer.maxValue - 8.9) <= epsilon);
+            Assert.True(Math.Abs(statsComputer.minValue - 1.5) <= epsilon);
+            #endregion
         }
         [Fact]
+        //To test the value returned is NaN
         public void ReportsNaNForEmptyInput()
         {
-            var statsComputer = new StatsComputer();
-            var computedStats = statsComputer.CalculateStatistics(
-                new List<___>{});
+            #region Arrange
+            var statsComputer  = new StatsComputer();
+            var calculatedVals = new List<float>{};
+            #endregion
+
+            statsComputer.CalculateStatistics(calculatedVals);
+            
             //All fields of computedStats (average, max, min) must be
             //Double.NaN (not-a-number), as described in
             //https://docs.microsoft.com/en-us/dotnet/api/system.double.nan?view=netcore-3.1
+
+            Assert.True(double.IsNaN(statsComputer.averageValue));
+            Assert.True(double.IsNaN(statsComputer.maxValue));
+            Assert.True(double.IsNaN(statsComputer.minValue));
         }
         [Fact]
         public void RaisesAlertsIfMaxIsMoreThanThreshold()
         {
-            var emailAlert = new EmailAlert();
-            var ledAlert = new LEDAlert();
-            IAlerter[] alerters = {emailAlert, ledAlert};
+            #region Arrange
+            var mailAlert = new EmailAlert();
+            var ledBulbAlert = new LEDAlert();
+            IAlerter[] alerts = {mailAlert, ledBulbAlert};
+            const float maxThreshold = 10.2f;
+            var statsAlerter = new StatsAlerter(maxThreshold, alerts);
+            #endregion
 
-            const float maxThreshold = 10.2;
-            var statsAlerter = new StatsAlerter(maxThreshold, alerters);
-            statsAlerter.checkAndAlert(new List<___>{0.2, 11.9, 4.3, 8.5});
+            #region Act
+            statsAlerter.checkAndSendAlert(new List<float>{0.2f, 11.9f, 4.3f, 8.5f});
+            #endregion
 
-            Assert.True(emailAlert.emailSent);
-            Assert.True(ledAlert.ledGlows);
+            #region Assert
+            Assert.True(mailAlert.emailAlertSent);
+            Assert.True(ledBulbAlert.ledBulbGlows);
+            #endregion
         }
     }
 }
