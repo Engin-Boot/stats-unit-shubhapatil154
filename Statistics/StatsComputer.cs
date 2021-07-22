@@ -3,16 +3,22 @@ using System.Collections.Generic;
 
 namespace Statistics
 {  
-    public class StatisticsCalculator
+    public class StatsComputer
     {   
         //Assigning default values to compare the values
-        public float averageValue = 0;     
-        public float minValue = float.MaxValue;
-        public float maxValue = float.MinValue;
+        public double averageValue = 0;     
+        public double minValue = float.MaxValue;
+        public double maxValue = float.MinValue;
         
         public void CalculateStatistics(List<float> listOfValues) {
             
-            float sumOfValues = 0;
+            double sumOfValues = 0;
+
+            if(listOfValues.Count == 0){
+                averageValue = Double.NaN;
+                maxValue = Double.NaN;
+                minValue = Double.NaN;
+            }
             for(int i = 0; i < listOfValues.Count; i++)
             {
                 //Finding the sum of all the values to calculate the average

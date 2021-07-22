@@ -4,13 +4,13 @@ using System.Collections.Generic;
 namespace Statistics
 {   
     //Class to validate threshold
-    public class StatisticsAlerter
+    public class StatsAlerter
     {
         //value to store the threshold value
         public float maxThresholdValue;
-        IAlertSender[] alertsToBeSent;
+        IAlerter[] alertsToBeSent;
         //setting values of max threshold and the list of alerts to be sent 
-        public StatisticsAlerter(float maxThresholdValue, IAlertSender[] alerts)
+        public StatsAlerter(float maxThresholdValue, IAlerter[] alerts)
         {
             this.maxThresholdValue = maxThresholdValue;
             this.alertsToBeSent = alerts;

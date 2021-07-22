@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Statistics
 {
-    public interface IAlertSender
+    public interface IAlerter
     {
         void sendAlerts();
     }

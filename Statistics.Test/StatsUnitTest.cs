@@ -5,13 +5,13 @@ using Statistics;
 
 namespace Statistics.Test
 {
-    public class StatisticsUnitTest
+    public class StatsUnitTest
     {
         [Fact]
         public void ReportsAverageMinMax()
         {
             #region Arrange
-            var statsComputer  = new StatisticsCalculator();
+            var statsComputer  = new StatsComputer();
             var computedStats  = new List<float>{1.5f, 8.9f, 3.2f, 4.5f};
             float epsilon = 0.001F;
             #endregion
@@ -31,7 +31,7 @@ namespace Statistics.Test
         public void ReportsNaNForEmptyInput()
         {
             #region Arrange
-            var statsComputer  = new StatisticsCalculator();
+            var statsComputer  = new StatsComputer();
             var calculatedVals = new List<float>{};
             #endregion
 
@@ -40,16 +40,20 @@ namespace Statistics.Test
             //All fields of computedStats (average, max, min) must be
             //Double.NaN (not-a-number), as described in
             //https://docs.microsoft.com/en-us/dotnet/api/system.double.nan?view=netcore-3.1
+
+            Assert.True(double.IsNaN(statsComputer.averageValue));
+            Assert.True(double.IsNaN(statsComputer.maxValue));
+            Assert.True(double.IsNaN(statsComputer.minValue));
         }
         [Fact]
         public void RaisesAlertsIfMaxIsMoreThanThreshold()
         {
             #region Arrange
-            var mailAlert = new MailAlert();
-            var ledBulbAlert = new LEDBulbAlert();
-            IAlertSender[] alerts = {mailAlert, ledBulbAlert};
+            var mailAlert = new EmailAlert();
+            var ledBulbAlert = new LEDAlert();
+            IAlerter[] alerts = {mailAlert, ledBulbAlert};
             const float maxThreshold = 10.2f;
-            var statsAlerter = new StatisticsAlerter(maxThreshold, alerts);
+            var statsAlerter = new StatsAlerter(maxThreshold, alerts);
             #endregion
 
             #region Act
