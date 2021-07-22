@@ -27,14 +27,15 @@ namespace Statistics.Test
             #endregion
         }
         [Fact]
+        //To test the value returned is NaN
         public void ReportsNaNForEmptyInput()
         {
             #region Arrange
-            var _calculateStatsObj = new StatisticsCalculator();
+            var statsComputer  = new StatisticsCalculator();
             var calculatedVals = new List<float>{};
             #endregion
 
-            _calculateStatsObj.CalculateStatistics(calculatedVals);
+            statsComputer.CalculateStatistics(calculatedVals);
             
             //All fields of computedStats (average, max, min) must be
             //Double.NaN (not-a-number), as described in
