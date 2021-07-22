@@ -8,10 +8,7 @@ namespace Statistics
     {
         //variable to store the state of the led bulb
         public bool ledBulbGlows;
-        //setting flase by default using constructor
-        public LEDAlert(){
-            ledBulbGlows = false;
-        }
+        
             //Changing the state of the led bulb if the value is above the threshold
         public void sendAlerts()
         {

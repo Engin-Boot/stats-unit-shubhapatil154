@@ -4,15 +4,16 @@ using System.Collections.Generic;
 namespace Statistics
 {  
     public class StatsComputer
-    {   
+    {          
+        
         //Assigning default values to compare the values
         public double averageValue = 0;     
         public double minValue = float.MaxValue;
         public double maxValue = float.MinValue;
-        
         public void CalculateStatistics(List<float> listOfValues) {
             
             double sumOfValues = 0;
+            
 
             if(listOfValues.Count == 0){
                 averageValue = Double.NaN;
